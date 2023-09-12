@@ -59,6 +59,8 @@ public class MainActivity extends AppCompatActivity implements OnDialogCloseList
         });
     }
 
+
+
     @Override
     public void onDialogClose(DialogInterface dialogInterface) {
         // Atualize a lista tList quando o diálogo for fechado
@@ -67,6 +69,7 @@ public class MainActivity extends AppCompatActivity implements OnDialogCloseList
             Collections.reverse(tList);
             adaptador.setTask(tList);
             adaptador.notifyDataSetChanged();
+
         }
     }
 }

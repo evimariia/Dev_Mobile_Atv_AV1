@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,6 +18,7 @@ import com.example.lista_tarefas.R;
 import com.example.lista_tarefas.dao.Tarefadao;
 import com.example.lista_tarefas.helper.SQLiteDataBaseHelper;
 import com.example.lista_tarefas.model.Tarefa;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,11 +29,14 @@ public class Lista_adaptador extends RecyclerView.Adapter<Lista_adaptador.MyView
     private MainActivity activity;
     private Tarefadao tarefadao;
 
+
     public Lista_adaptador(Tarefadao tarefadao, MainActivity activity){
         this.activity = activity;
         this.tarefadao = tarefadao;
         this.tList = new ArrayList<>();
     }
+
+
 
     @NonNull
     @Override
@@ -45,6 +50,13 @@ public class Lista_adaptador extends RecyclerView.Adapter<Lista_adaptador.MyView
         final Tarefa item = tList.get(position);
         holder.mCheckBox.setText(item.getTarefa());
         holder.mCheckBox.setChecked(toBoolean(item.getStatus()));
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                deletTask(holder.getAbsoluteAdapterPosition());
+                return true;
+            }
+        });
         holder.mCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -70,9 +82,13 @@ public class Lista_adaptador extends RecyclerView.Adapter<Lista_adaptador.MyView
 
     public void deletTask(int position){
         Tarefa item = tList.get(position);
-        tarefadao.deletar(item.getId());
-        tList.remove(position);
-        notifyItemRemoved(position);
+       boolean deletd = tarefadao.deletar(item.getId());
+       if (deletd){
+           tList.remove(position);
+           notifyItemRemoved(position);
+
+       }
+
     }
     public void editItem(int position){
         Tarefa item = tList.get(position);
@@ -92,9 +108,11 @@ public class Lista_adaptador extends RecyclerView.Adapter<Lista_adaptador.MyView
     public static class MyViewHolder extends RecyclerView.ViewHolder{
         CheckBox mCheckBox;
 
+
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             mCheckBox = itemView.findViewById(R.id.todoCheckBox);
+
         }
     }
 }

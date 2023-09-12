@@ -20,7 +20,10 @@
             tool:text="this is an sample tesk"
             android:paddingStart="8dp"
             android:buttonTint="@android:color/holo_green_dark"/>
+
     </RelativeLayout>
+
+
 
 </androidx.cardview.widget.CardView>
 
