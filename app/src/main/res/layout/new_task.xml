@@ -9,7 +9,7 @@
         android:background="@null"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:padding="16dp"
-        android:hint="new task"/>
+        android:hint="adicionar tarefa"/>
 
     <Button
         android:id="@+id/newTaskButton"
